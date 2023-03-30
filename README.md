@@ -5,6 +5,8 @@
 | ------ | ------ |
 | Go | 1.20 |
 | PostgreSQL | 15.2 |
+| ------ | ------ |
+
 功能如下:
 1.  `Golang` 開發並設計 Restful API 。
 2. 執行 `go test` 即可執行 Integration Test
