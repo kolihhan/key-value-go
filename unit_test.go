@@ -37,7 +37,7 @@ func TestGetHeadHandler(t *testing.T) {
 	}
 
 	// 開啓HTTP Server用於測試
-	router.GET("/list/:listKey/head", GetHeadHandler)
+	router.GET("/list/head/:listKey", GetHeadHandler)
 	ts := httptest.NewServer(router)
 	defer ts.Close()
 
@@ -46,7 +46,7 @@ func TestGetHeadHandler(t *testing.T) {
 	assert.NoError(t, err)
 
 	// 發送HTTP Request 用於測試
-	resp, err := http.Get(ts.URL + "/list/testlist/head")
+	resp, err := http.Get(ts.URL + "/list/head/testlist")
 
 	if err != nil {
 		t.Errorf("Http Get Method error : %s", err)
@@ -196,7 +196,7 @@ func initializeSchema(db *sql.DB) error {
             page_key text NOT NULL,
             articles text NOT NULL,
             next_page_key text,
-            created_at timestamptz NOT NULL DEFAULT now(),
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW() + INTERVAL '24 HOURS',
             PRIMARY KEY (list_key, page_key)
         );
     `)
@@ -208,7 +208,7 @@ func initializeSchema(db *sql.DB) error {
         CREATE TABLE IF NOT EXISTS list_items (
             list_key text NOT NULL,
             value text NOT NULL,
-            created_at timestamptz NOT NULL DEFAULT now(),
+            created_at TIMESTAMPTZ NOT NULL DEFAULT NOW() + INTERVAL '24 HOURS',
             PRIMARY KEY (list_key)
         );
     `)
